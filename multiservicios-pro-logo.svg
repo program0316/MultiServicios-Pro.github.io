@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="250" viewBox="0 0 940 250" role="img" aria-labelledby="title desc">
+  <title id="title">MultiServicios Pro</title>
+  <desc id="desc">Emblema rojo de gorra y mancuerna junto al nombre MultiServicios Pro</desc>
+  <defs>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff2736"/>
+      <stop offset="1" stop-color="#d90016"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#red)" stroke-width="12">
+    <path d="M237 39a104 104 0 1 0 9 137"/>
+    <path d="M68 171a104 104 0 0 0 161 28"/>
+  </g>
+  <g stroke="#111" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M113 123c-3-31 8-59 32-75 24-16 54-13 73 7l32 36c-25-8-45-5-62 5-20 12-38 28-75 27Z" fill="url(#red)"/>
+    <path d="M110 123c20 3 40-1 60-11 26-13 50-14 76-3-16 4-27 12-36 23-31-5-64 2-100 19Z" fill="#f7f5ed"/>
+    <path d="M140 61c17-13 42-17 62-8M165 54l-3 7" fill="none"/>
+    <path d="M32 152h29M39 136v33M48 129v47M60 136v34M72 146l13 7M84 142v29M93 141v25" fill="none" stroke="#f7f5ed" stroke-width="9"/>
+    <path d="M32 152h29M39 136v33M48 129v47M60 136v34" fill="none" stroke="url(#red)" stroke-width="5"/>
+    <path d="M220 91h22M229 76v31M242 67v49M255 75v34" fill="none" stroke="#f7f5ed" stroke-width="9"/>
+    <path d="M220 91h22M229 76v31M242 67v49M255 75v34" fill="none" stroke="url(#red)" stroke-width="5"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-style="italic" font-weight="900" paint-order="stroke fill" stroke-linejoin="round">
+    <text x="270" y="111" font-size="58" fill="#fff" stroke="#111" stroke-width="8">MultiServicios</text>
+    <text x="390" y="201" font-size="94" fill="url(#red)" stroke="#111" stroke-width="9">Pro</text>
+    <text x="390" y="201" font-size="94" fill="none" stroke="#fff" stroke-width="2" filter="url(#glow)">Pro</text>
+  </g>
+</svg>
