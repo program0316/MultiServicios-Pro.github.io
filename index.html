@@ -108,6 +108,7 @@
     .caps-more p { max-width: 570px; margin: 0; font-size: 13px; font-weight: 700; line-height: 1.55; }
     .caps-more strong { color: var(--blue); }
     .shirt-personalization-note { max-width: none; margin: -8px 0 24px; padding: 12px 15px; border-left: 4px solid var(--pink); background: rgba(255, 0, 184, .08); font-size: 12px; font-weight: 700; line-height: 1.55; }
+    .sweater-filters { margin-top: 22px; }
     .shirt-personalization { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; min-height: 42px; font-size: 11px; font-weight: 800; }
     .shirt-personalization input { flex: 0 0 18px; width: 18px; height: 18px; margin: 0; accent-color: var(--pink); }
     .shirt-custom-fields { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -360,6 +361,11 @@
         <p class="section-note">Todas las camisetas son por pedido. Escríbeme al privado por WhatsApp para consultar precio, talla y disponibilidad.</p>
       </div>
       <p class="shirt-personalization-note">¿La quieres con nombre y número? La personalización tiene un costo adicional; consulta el precio por privado antes de confirmar.</p>
+      <div class="filters sweater-filters" id="sweater-filters" role="group" aria-label="Filtrar camisetas">
+        <button class="filter-button" type="button" data-sweater-gender="all" aria-pressed="true">Todos</button>
+        <button class="filter-button" type="button" data-sweater-gender="other" aria-pressed="false">Otros equipos</button>
+        <button class="filter-button" type="button" data-sweater-gender="women" aria-pressed="false">Mujer</button>
+      </div>
       <div class="products" id="products-sweaters" aria-live="polite"></div>
       <form class="temu-form shirt-request" id="shirt-request-form" aria-label="Solicitar camiseta de otro equipo">
         <div class="temu-field full"><label for="shirt-request-name">Tu nombre</label><input id="shirt-request-name" name="name" autocomplete="name" maxlength="70" placeholder="¿Cómo te llamas?" required></div>
@@ -561,6 +567,39 @@
       tag: "Consultar precio"
     })));
 
+    const sweaterFolders = [
+      { folder: "AC MILAN", team: "AC Milan", count: 38 },
+      { folder: "ARSENAL MUJERES", team: "Arsenal", count: 17, gender: "women" },
+      { folder: "ATLETICO DE MADRID", team: "Atlético de Madrid", count: 27 },
+      { folder: "barca especiales", team: "Barcelona especial", count: 117 },
+      { folder: "BARCELONA", team: "FC Barcelona", count: 117 },
+      { folder: "BARCELONA MUJER", team: "FC Barcelona", count: 49, gender: "women" },
+      { folder: "BAYERN M", team: "Bayern Múnich", count: 25 },
+      { folder: "Bayern Munich Women _", team: "Bayern Múnich", count: 12, gender: "women" },
+      { folder: "Besiktas", team: "Besiktas", count: 24 },
+      { folder: "BTS", team: "BTS", count: 24 },
+      { folder: "BVB Borussia Dortmund", team: "Borussia Dortmund", count: 14 },
+      { folder: "Chelsea", team: "Chelsea", count: 30 },
+      { folder: "De-portivo", team: "Deportivo", count: 49 },
+      { folder: "Inter Miami", team: "Inter Miami", count: 39 },
+      { folder: "Inter Milan", team: "Inter de Milán", count: 24 },
+      { folder: "Leipzig Red Bul", team: "RB Leipzig", count: 21 },
+      { folder: "Leverkusen", team: "Bayer Leverkusen", count: 21 },
+      { folder: "Ly-on", team: "Olympique de Lyon", count: 15 },
+      { folder: "M-U", team: "Manchester United", count: 8 },
+      { folder: "Man City", team: "Manchester City", count: 15 },
+      { folder: "Marseille", team: "Olympique de Marseille", count: 15 },
+      { folder: "Napoles", team: "Napoli", count: 44 },
+      { folder: "Norwich City", team: "Norwich City", count: 12 },
+      { folder: "Pa-ris", team: "Paris Saint-Germain", count: 117 },
+      { folder: "Pumas", team: "Pumas", count: 12 },
+      { folder: "Real Madrid", team: "Real Madrid", count: 117 },
+      { folder: "Real Madrid women", team: "Real Madrid", count: 9, gender: "women" },
+      { folder: "Real So-ciedad", team: "Real Sociedad", count: 81 },
+      { folder: "ROMA", team: "Roma", count: 12 },
+      { folder: "Tottenham", team: "Tottenham", count: 19 }
+    ];
+
     const money = new Intl.NumberFormat("es-PA", { style: "currency", currency: "USD" });
     const productGrids = {
       gorras: document.querySelector("#products-caps"),
@@ -580,8 +619,13 @@
       } catch { return []; }
     }
 
+    let sweaterGenderFilter = "all";
+
     function renderProducts(category) {
-      const visible = products.filter(product => product.category === category);
+      const categoryProducts = products.filter(product => product.category === category);
+      const visible = category === "sueteres"
+        ? categoryProducts.filter(product => sweaterGenderFilter === "all" || (product.gender || "other") === sweaterGenderFilter)
+        : categoryProducts;
       productGrids[category].innerHTML = visible.map((product, index) => `
         <article class="product" style="animation-delay:${index * 45}ms">
           <div class="product-image"><img src="${product.image}" alt="${product.name}" loading="lazy"><span class="product-tag">${product.tag}</span></div>
@@ -589,6 +633,60 @@
           <button class="add-button" data-add="${product.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg> Agregar al pedido</button>
         </article>`).join("");
     }
+
+    async function findSweaterImage(folder, model) {
+      const file = model === 1 ? "small" : `small(${model - 1})`;
+      for (const extension of ["jpg", "jpeg", "png"]) {
+        const imagePath = `assets/sueteres/${encodeURIComponent(folder)}/${file}.${extension}`;
+        const exists = await new Promise(resolve => {
+          const image = new Image();
+          image.onload = () => resolve(true);
+          image.onerror = () => resolve(false);
+          image.src = imagePath;
+        });
+        if (exists) return imagePath;
+      }
+      return null;
+    }
+
+    async function addSweaterFolderProducts() {
+      const candidates = sweaterFolders.flatMap(folder =>
+        Array.from({ length: folder.count }, (_, index) => ({ folder, model: index + 1 }))
+      );
+      const discovered = new Array(candidates.length);
+      let nextCandidate = 0;
+      async function worker() {
+        while (nextCandidate < candidates.length) {
+          const index = nextCandidate++;
+          const { folder, model } = candidates[index];
+          const image = await findSweaterImage(folder.folder, model);
+          if (image) {
+            discovered[index] = {
+              id: `folder-shirt-${encodeURIComponent(folder.folder)}-${model}`,
+              category: "sueteres",
+              gender: folder.gender || "other",
+              name: `${folder.team} · Modelo ${String(model).padStart(2, "0")}`,
+              description: "Camiseta de fútbol · precio y talla por privado",
+              image,
+              tag: "Consultar precio"
+            };
+          }
+        }
+      }
+      await Promise.all(Array.from({ length: 12 }, worker));
+      products.push(...discovered.filter(Boolean));
+      renderProducts("sueteres");
+    }
+
+    document.querySelector("#sweater-filters").addEventListener("click", event => {
+      const button = event.target.closest("[data-sweater-gender]");
+      if (!button) return;
+      sweaterGenderFilter = button.dataset.sweaterGender;
+      document.querySelectorAll("[data-sweater-gender]").forEach(filter => {
+        filter.setAttribute("aria-pressed", String(filter === button));
+      });
+      renderProducts("sueteres");
+    });
 
     function renderCart() {
       cart = cart.filter(item => products.some(product => product.id === item.id) && item.quantity > 0);
@@ -920,6 +1018,7 @@
 
     renderProducts("gorras");
     renderProducts("sueteres");
+    addSweaterFolderProducts();
     renderCart();
     window.addEventListener("load", () => setTimeout(() => document.querySelector("#loader").classList.add("done"), 1250));
   </script>

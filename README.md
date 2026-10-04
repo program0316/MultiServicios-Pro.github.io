@@ -8,7 +8,7 @@ Las doce fichas de gorras usan las fotografías subidas en `assets/gorras/` y ll
 
 La sección de gorras permite solicitar por WhatsApp otros diseños; los modelos disponibles pueden variar.
 
-La sección Suéteres ahora muestra 63 camisetas de equipos con las fotos originales en `assets/sueteres/`. Los precios no se publican: se consultan por privado. El carrito y WhatsApp indican que el precio debe confirmarse, sin calcular un total falso.
+La sección Suéteres muestra las camisetas existentes y detecta las fotos `small` de las carpetas de equipos dentro de `assets/sueteres/`. Los modelos nuevos se identifican por equipo y número; el filtro permite ver todos, los demás equipos o solo los modelos de mujer (Arsenal, Barcelona, Bayern Múnich y Real Madrid). Los precios no se publican: se consultan por privado. El carrito y WhatsApp indican que el precio debe confirmarse, sin calcular un total falso.
 
 La sección Suplementos no publica fotos ni precios de muestra; permite elegir proteína, creatina, pre-entreno u otro tipo y consulta por WhatsApp disponibilidad y precios.
 
