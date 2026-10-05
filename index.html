@@ -95,6 +95,7 @@
     .marquee-track span { padding: 0 21px; }
     @keyframes marquee { to { transform: translateX(-50%); } }
     .shop { padding: 84px 7vw 100px; }
+    #personalizados { scroll-margin-top: 105px; }
     .supplements-shop { position: relative; overflow: hidden; border-top: 1px solid var(--line); background: var(--ink); color: var(--white); }
     .supplements-shop::after { position: absolute; top: 35px; right: 7vw; content: "SUPPLEMENT CHECK"; color: rgba(255,255,255,.055); font: clamp(24px, 5vw, 68px) var(--display); pointer-events: none; }
     .supplements-shop .section-head { position: relative; z-index: 1; }
@@ -122,8 +123,28 @@
     .product-image { position: relative; aspect-ratio: 1 / 1.02; overflow: hidden; background: #e0ddd1; }
     .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s cubic-bezier(.2, .8, .2, 1); }
     .product:hover .product-image img { transform: scale(1.045); }
+    .custom-product-image { display: grid; place-items: center; background: var(--custom-background, #d9ded4); }
+    .custom-product-image-keychain { --custom-background: #c9e4dd; }
+    .custom-product-image-mug { --custom-background: #f0d8bb; }
+    .custom-piece { position: relative; display: grid; place-items: center; width: 126px; height: 126px; border: 2px solid var(--ink); background: var(--white); box-shadow: 7px 8px 0 rgba(23, 24, 23, .2); transition: transform .3s; }
+    .product:hover .custom-piece { transform: translateY(-3px) rotate(-2deg); }
+    .custom-piece img { width: 58%; height: 58%; object-fit: contain; }
+    .custom-piece-mark { display: grid; place-items: center; width: 78%; min-height: 52px; color: var(--ink); font: 13px/1.1 var(--display); text-align: center; text-transform: uppercase; }
+    .custom-piece-mark-name { color: #d51a54; font-size: 16px; }
+    .custom-piece-mark-ambulance { position: relative; width: 76px; height: 42px; border: 2px solid var(--ink); border-radius: 8px 12px 7px 7px; background: var(--white); color: #d51a54; font-size: 10px; }
+    .custom-piece-mark-ambulance::after { position: absolute; top: -9px; right: 5px; display: grid; place-items: center; width: 19px; height: 19px; border: 1px solid var(--ink); border-radius: 50%; background: var(--white); color: #d51a54; content: "+"; font: 15px/1 var(--display); }
+    .custom-piece-mark-medical { width: 56px; height: 56px; border: 3px solid #d51a54; border-radius: 50%; color: #d51a54; font: 42px/1 var(--display); }
+    .custom-piece-mark-healthcare { color: #176b78; font-size: 15px; }
+    .custom-piece-mark-pet { color: #515a2f; font-size: 11px; }
+    .custom-piece-keychain { width: 112px; height: 112px; border-radius: 28px; }
+    .custom-piece-keychain::before { position: absolute; top: -25px; left: calc(50% - 14px); width: 28px; height: 28px; border: 5px solid #777b76; border-radius: 50%; content: ""; }
+    .custom-piece-keychain::after { position: absolute; top: -7px; width: 3px; height: 13px; background: #777b76; content: ""; }
+    .custom-piece-mug { width: 112px; height: 88px; border-radius: 7px 7px 17px 17px; }
+    .custom-piece-mug::after { position: absolute; top: 17px; right: -24px; width: 28px; height: 39px; border: 7px solid var(--white); border-left: 0; border-radius: 0 20px 20px 0; content: ""; }
     .product-tag { position: absolute; top: 12px; left: 12px; padding: 7px 9px; background: var(--lime); border: 1px solid var(--ink); font-size: 9px; font-weight: 800; text-transform: uppercase; }
     .product-info { display: flex; justify-content: space-between; gap: 12px; align-items: start; padding-top: 13px; }
+    .product-info.personalized-product-info { flex-direction: column; align-items: flex-start; gap: 6px; flex-wrap: nowrap; }
+    .personalized-product-info .product-price { font-size: 12px; white-space: normal; }
     .product h3 { margin: 0 0 4px; font: 17px var(--display); text-transform: uppercase; }
     .product-description { margin: 0; color: #56574f; font-size: 11px; line-height: 1.5; }
     .product-price { margin: 1px 0 0; font-size: 14px; font-weight: 800; white-space: nowrap; }
@@ -203,6 +224,7 @@
     .empty-cart { padding: 38px 4px; color: #66675f; font-size: 13px; }
     .cart-item { display: grid; grid-template-columns: 68px 1fr auto; gap: 12px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); }
     .cart-item img { width: 68px; height: 70px; object-fit: cover; background: #e0ddd1; }
+    .cart-item-art { display: grid; place-items: center; width: 68px; height: 70px; border: 1px solid var(--ink); background: var(--lime); font: 10px/1.1 var(--display); text-align: center; }
     .cart-item h3 { margin: 0 0 4px; font: 13px var(--display); text-transform: uppercase; }
     .cart-item p { margin: 0; font-size: 11px; }
     .quantity { display: flex; align-items: center; gap: 8px; margin-top: 7px; }
@@ -231,6 +253,16 @@
     @keyframes bars { to { height: 13px; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
     @media (max-width: 820px) {
+      .site-header { grid-template-columns: minmax(0, 1fr) auto; gap: 10px 8px; padding: 10px 5vw 9px; }
+      .brand { min-width: 0; }
+      .brand-logo { width: 190px; }
+      .main-nav { grid-column: 1 / -1; grid-row: 2; justify-self: stretch; justify-content: flex-start; gap: 4px; width: 100%; max-width: 100%; padding: 4px; overflow-x: auto; scrollbar-width: none; }
+      .main-nav::-webkit-scrollbar { display: none; }
+      .main-nav a { flex: 1 0 auto; justify-content: center; min-height: 38px; padding: 0 11px; font-size: 9px; }
+      .header-actions { grid-column: 2; grid-row: 1; gap: 7px; }
+      .section-head { align-items: flex-start; flex-direction: column; gap: 14px; }
+      .section-note { max-width: 560px; }
+      .product-price.private-price { max-width: 100%; white-space: normal; overflow-wrap: anywhere; font-size: 10px; }
       .hero { min-height: auto; grid-template-columns: 1fr .72fr; }
       .hero-copy { padding: 55px 3vw 55px 7vw; }
       .hero-visual { min-height: 430px; }
@@ -315,8 +347,9 @@
     <nav class="main-nav" aria-label="Secciones de la tienda">
       <a href="#gorras" data-section-link="gorras" aria-current="location"><span class="nav-index">01</span> Gorras</a>
       <a href="#sueteres" data-section-link="sueteres"><span class="nav-index">02</span> Suéteres</a>
-      <a href="#suplementos" data-section-link="suplementos"><span class="nav-index">03</span> Suplementos</a>
-      <a href="#pedidos-temu" data-section-link="pedidos-temu"><span class="nav-index">04</span> Pedidos Temu</a>
+      <a href="#personalizados" data-section-link="personalizados"><span class="nav-index">03</span> Llaveros y sublimables</a>
+      <a href="#suplementos" data-section-link="suplementos"><span class="nav-index">04</span> Suplementos</a>
+      <a href="#pedidos-temu" data-section-link="pedidos-temu"><span class="nav-index">05</span> Pedidos Temu</a>
     </nav>
     <div class="header-actions">
       <button class="icon-button cart-open" id="cart-open" aria-label="Abrir carrito, 0 artículos" title="Abrir carrito">
@@ -380,6 +413,19 @@
         <button class="button-dark" type="submit">Pedir otro modelo por WhatsApp <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.5 11.7a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.4-4.9A8.4 8.4 0 1 1 20.5 11.7Z"/></svg></button>
       </form>
       <p style="margin:22px 0 0;color:#65665e;font-size:10px">Precio y tallas se confirman al consultar por privado.</p>
+    </section>
+
+    <section class="shop" id="personalizados" aria-labelledby="custom-products-title">
+      <div class="section-head">
+        <div><p class="eyebrow">Diseños a tu gusto</p><h2 id="custom-products-title">Llaveros 3D y sublimables.</h2></div>
+        <p class="section-note">Llaveros hechos con filamento 3D y tazas sublimadas. Consulta por WhatsApp el precio y la disponibilidad de cada diseño.</p>
+      </div>
+      <p class="shirt-personalization-note">Ejemplos de logos y símbolos que podemos convertir en llaveros 3D. Personalizamos nombres, empresas, autos, ambulancias, enfermería, paramédico, mascotas y otras ideas. Confirma disponibilidad y precio por WhatsApp.</p>
+      <div class="products" id="products-personalizados" aria-live="polite"></div>
+      <div class="caps-more">
+        <p><strong>¿Tienes tu propio diseño?</strong> Envíanos el logo, nombre o imagen de referencia para tu llavero o producto sublimable. Adjunta el archivo en el chat de WhatsApp.</p>
+        <button class="button-dark" id="send-custom-design-whatsapp" type="button">Enviar mi diseño por WhatsApp <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.5 11.7a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.4-4.9A8.4 8.4 0 1 1 20.5 11.7Z"/></svg></button>
+      </div>
     </section>
 
     <section class="shop supplements-shop" id="suplementos" aria-labelledby="supplements-title">
@@ -567,6 +613,31 @@
       tag: "Consultar precio"
     })));
 
+    products.push(
+      { id: "keychain-3d-nike", category: "personalizados", name: "Llavero 3D · Logo deportivo", description: "Filamento 3D · diseño personalizable", price: null, image: "https://cdn.simpleicons.org/nike/171817", visual: "keychain", tag: "Filamento 3D" },
+      { id: "keychain-3d-adidas", category: "personalizados", name: "Llavero 3D · Marca", description: "Filamento 3D · logo o nombre", price: null, image: "https://cdn.simpleicons.org/adidas/171817", visual: "keychain", tag: "Filamento 3D" },
+      { id: "keychain-3d-spotify", category: "personalizados", name: "Llavero 3D · Música", description: "Filamento 3D · logo o diseño favorito", price: null, image: "https://cdn.simpleicons.org/spotify/171817", visual: "keychain", tag: "Filamento 3D" },
+      { id: "keychain-3d-playstation", category: "personalizados", name: "Llavero 3D · Gamer", description: "Filamento 3D · equipo o personaje", price: null, image: "https://cdn.simpleicons.org/playstation/171817", visual: "keychain", tag: "Filamento 3D" },
+      { id: "keychain-3d-puma", category: "personalizados", name: "Llavero 3D · Puma", description: "Filamento 3D · logo o nombre", price: null, image: "https://cdn.simpleicons.org/puma/171817", visual: "keychain", tag: "Filamento 3D" },
+      { id: "keychain-3d-apple", category: "personalizados", name: "Llavero 3D · Empresa", description: "Filamento 3D · logo o nombre", price: null, image: "https://cdn.simpleicons.org/apple/171817", visual: "keychain", tag: "Filamento 3D" },
+      { id: "keychain-car-toyota", category: "personalizados", name: "Llavero 3D · Toyota", description: "Filamento 3D · logo de auto", price: null, image: "https://cdn.simpleicons.org/toyota/171817", visual: "keychain", tag: "Autos" },
+      { id: "keychain-car-ford", category: "personalizados", name: "Llavero 3D · Ford", description: "Filamento 3D · logo de auto", price: null, image: "https://cdn.simpleicons.org/ford/171817", visual: "keychain", tag: "Autos" },
+      { id: "keychain-car-tesla", category: "personalizados", name: "Llavero 3D · Tesla", description: "Filamento 3D · logo de auto", price: null, image: "https://cdn.simpleicons.org/tesla/171817", visual: "keychain", tag: "Autos" },
+      { id: "keychain-car-honda", category: "personalizados", name: "Llavero 3D · Honda", description: "Filamento 3D · logo de auto", price: null, image: "https://cdn.simpleicons.org/honda/171817", visual: "keychain", tag: "Autos" },
+      { id: "keychain-car-bmw", category: "personalizados", name: "Llavero 3D · BMW", description: "Filamento 3D · logo de auto", price: null, image: "https://cdn.simpleicons.org/bmw/171817", visual: "keychain", tag: "Autos" },
+      { id: "keychain-car-chevrolet", category: "personalizados", name: "Llavero 3D · Chevrolet", description: "Filamento 3D · logo de auto", price: null, image: "https://cdn.simpleicons.org/chevrolet/171817", visual: "keychain", tag: "Autos" },
+      { id: "keychain-name-ana", category: "personalizados", name: "Llavero 3D · Ana", description: "Filamento 3D · nombre personalizado", price: null, artText: "ANA", artType: "name", visual: "keychain", tag: "Personalizado" },
+      { id: "keychain-name-mateo", category: "personalizados", name: "Llavero 3D · Mateo", description: "Filamento 3D · nombre personalizado", price: null, artText: "MATEO", artType: "name", visual: "keychain", tag: "Personalizado" },
+      { id: "keychain-name-sofia", category: "personalizados", name: "Llavero 3D · Sofía", description: "Filamento 3D · nombre personalizado", price: null, artText: "SOFÍA", artType: "name", visual: "keychain", tag: "Personalizado" },
+      { id: "keychain-ambulance", category: "personalizados", name: "Llavero 3D · Ambulancia", description: "Filamento 3D · diseño de emergencia", price: null, artText: "AMB", artType: "ambulance", visual: "keychain", tag: "Emergencias" },
+      { id: "keychain-nursing", category: "personalizados", name: "Llavero 3D · Enfermería", description: "Filamento 3D · diseño médico", price: null, artText: "ENF", artType: "healthcare", visual: "keychain", tag: "Salud" },
+      { id: "keychain-paramedic", category: "personalizados", name: "Llavero 3D · Paramédico", description: "Filamento 3D · diseño médico", price: null, artText: "PRM", artType: "healthcare", visual: "keychain", tag: "Salud" },
+      { id: "keychain-medical-cross", category: "personalizados", name: "Llavero 3D · Cruz médica", description: "Filamento 3D · diseño de salud", price: null, artText: "+", artType: "medical", visual: "keychain", tag: "Salud" },
+      { id: "keychain-pet", category: "personalizados", name: "Llavero 3D · Mascota", description: "Filamento 3D · nombre o huella", price: null, artText: "HUELLA", artType: "pet", visual: "keychain", tag: "Personalizado" },
+      { id: "keychain-initials", category: "personalizados", name: "Llavero 3D · Iniciales", description: "Filamento 3D · letras a elección", price: null, artText: "J+M", artType: "name", visual: "keychain", tag: "Personalizado" },
+      { id: "sublimation-mug-cocacola", category: "personalizados", name: "Taza sublimada", description: "Diseño de muestra · logo o foto", price: null, image: "https://cdn.simpleicons.org/cocacola/171817", visual: "mug", tag: "Sublimación" }
+    );
+
     const sweaterFolders = [
       { folder: "AC MILAN", team: "AC Milan", count: 38 },
       { folder: "ARSENAL MUJERES", team: "Arsenal", count: 17, gender: "women" },
@@ -603,7 +674,8 @@
     const money = new Intl.NumberFormat("es-PA", { style: "currency", currency: "USD" });
     const productGrids = {
       gorras: document.querySelector("#products-caps"),
-      sueteres: document.querySelector("#products-sweaters")
+      sueteres: document.querySelector("#products-sweaters"),
+      personalizados: document.querySelector("#products-personalizados")
     };
     const cartOverlay = document.querySelector("#cart-overlay");
     const cartItems = document.querySelector("#cart-items");
@@ -628,8 +700,8 @@
         : categoryProducts;
       productGrids[category].innerHTML = visible.map((product, index) => `
         <article class="product" style="animation-delay:${index * 45}ms">
-          <div class="product-image"><img src="${product.image}" alt="${product.name}" loading="lazy"><span class="product-tag">${product.tag}</span></div>
-          <div class="product-info"><div><h3>${product.name}</h3><p class="product-description">${product.description}</p></div><p class="product-price${product.price == null ? " private-price" : ""}">${product.price == null ? "Consultar precio por privado" : money.format(product.price)}</p></div>
+          <div class="product-image${product.visual ? ` custom-product-image custom-product-image-${product.visual}` : ""}">${product.visual ? `<div class="custom-piece custom-piece-${product.visual}">${product.artText ? `<span class="custom-piece-mark custom-piece-mark-${product.artType}" aria-hidden="true">${product.artText}</span>` : `<img src="${product.image}" alt="Logo de muestra para ${product.name}" loading="lazy">`}</div>` : `<img src="${product.image}" alt="${product.name}" loading="lazy">`}<span class="product-tag">${product.tag}</span></div>
+          <div class="product-info${category === "personalizados" ? " personalized-product-info" : ""}"><div><h3>${product.name}</h3><p class="product-description">${product.description}</p></div><p class="product-price${product.price == null ? " private-price" : ""}">${product.price == null ? "Consultar precio por privado" : money.format(product.price)}</p></div>
           <button class="add-button" data-add="${product.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg> Agregar al pedido</button>
         </article>`).join("");
     }
@@ -700,7 +772,7 @@
         return sum + (product && product.price != null ? product.price * item.quantity : 0);
       }, 0);
       document.querySelector("#cart-total").textContent = includesPrivatePrice
-        ? pricedSubtotal > 0 ? `${money.format(pricedSubtotal)} + consultar camisetas` : "Consultar por privado"
+        ? pricedSubtotal > 0 ? `${money.format(pricedSubtotal)} + consultar precio final` : "Consultar por privado"
         : money.format(pricedSubtotal);
       customerForm.classList.toggle("show", cart.length > 0 && customerForm.classList.contains("show"));
       if (!cart.length) {
@@ -715,7 +787,8 @@
       cartItems.innerHTML = cart.map(item => {
         const product = products.find(entry => entry.id === item.id);
         const itemPrice = product.price == null ? "Consultar precio por privado" : money.format(product.price * item.quantity);
-        return `<article class="cart-item"><img src="${product.image}" alt=""><div><h3>${product.name}</h3><p>${itemPrice}</p><div class="quantity"><button data-quantity="${product.id}" data-delta="-1" aria-label="Quitar una unidad de ${product.name}">−</button><span>${item.quantity}</span><button data-quantity="${product.id}" data-delta="1" aria-label="Agregar una unidad de ${product.name}">+</button></div></div><button class="remove-button" data-remove="${product.id}">Quitar</button></article>`;
+        const itemImage = product.image ? `<img src="${product.image}" alt="">` : `<span class="cart-item-art" aria-hidden="true">${product.artText}</span>`;
+        return `<article class="cart-item">${itemImage}<div><h3>${product.name}</h3><p>${itemPrice}</p><div class="quantity"><button data-quantity="${product.id}" data-delta="-1" aria-label="Quitar una unidad de ${product.name}">−</button><span>${item.quantity}</span><button data-quantity="${product.id}" data-delta="1" aria-label="Agregar una unidad de ${product.name}">+</button></div></div><button class="remove-button" data-remove="${product.id}">Quitar</button></article>`;
       }).join("");
     }
 
@@ -821,6 +894,15 @@
         return;
       }
       const message = "Hola, quisiera ver otros diseños de gorras disponibles. Sé que los modelos pueden variar; ¿me puedes enviar las opciones actuales y su disponibilidad?";
+      window.open(`https://wa.me/${STORE.whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    });
+
+    document.querySelector("#send-custom-design-whatsapp").addEventListener("click", () => {
+      if (!/^\d{8,15}$/.test(STORE.whatsappNumber)) {
+        showToast("Configura el número de WhatsApp en index.html");
+        return;
+      }
+      const message = "Hola, quiero enviar mi diseño para un llavero 3D o producto sublimable. Adjunto la imagen de referencia. ¿Me confirman si se puede hacer y el precio?";
       window.open(`https://wa.me/${STORE.whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
     });
 
@@ -1018,6 +1100,7 @@
 
     renderProducts("gorras");
     renderProducts("sueteres");
+    renderProducts("personalizados");
     addSweaterFolderProducts();
     renderCart();
     window.addEventListener("load", () => setTimeout(() => document.querySelector("#loader").classList.add("done"), 1250));
